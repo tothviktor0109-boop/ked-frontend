@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Klani E Detit | HQ</title>
+    <meta name="referrer" content="no-referrer">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
 
@@ -421,7 +422,7 @@
                 <div id="header-rang" style="color:var(--text-muted);font-weight:500; text-transform:uppercase; letter-spacing:1px; flex:1;">RANG: -</div>
                 <div style="flex:1;text-align:right; display:flex; justify-content:flex-end; align-items:center; gap:15px;">
                     <span id="logged-in-user" style="color:var(--text);font-weight:500; display:flex; align-items:center; gap:10px;">
-                        <div style="width:32px; height:32px; background:var(--surface-light); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text-muted); border: 1px solid var(--border);">U</div>
+                        <div style="width:32px; height:32px; background:var(--surface-light); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text-muted); border: 1px solid var(--border); overflow: hidden;">U</div>
                         <span>User</span>
                     </span>
                     <button onclick="kijelentkezes()" style="padding:0.4rem 1rem; font-size:0.85rem; background:rgba(239, 68, 68, 0.15); color:var(--danger); border:none; border-radius:99px; cursor:pointer; font-weight:500; transition:all 0.2s;">
@@ -673,7 +674,9 @@
     <div id="profil-modal" class="modal-overlay" onclick="this.style.display='none'">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div style="display:flex; align-items:center; gap:15px; margin-bottom:20px;">
-                <div style="width:60px; height:60px; border-radius:50%; background:var(--surface-light); display:flex; align-items:center; justify-content:center; color:var(--text-muted);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 50%; height: 50%;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                <div style="width:60px; height:60px; border-radius:50%; background:var(--surface-light); display:flex; align-items:center; justify-content:center; color:var(--text-muted); border: 1px solid var(--border); overflow: hidden;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 50%; height: 50%;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </div>
                 <div>
                     <h2 id="modal-ic" style="margin:0; font-weight:600;"></h2>
                     <p id="modal-user" style="color:var(--text-muted);font-size:.9rem;margin:2px 0"></p>
@@ -855,7 +858,7 @@
             const d = JSON.parse(atob(t.split('.')[1]));
             myUserId = d.id; myUserName = d.ic_nev || d.nev; myUserRang = d.rang; myPermissions = d;
             
-            document.getElementById('logged-in-user').innerHTML = `<div style="width:28px; height:28px; background:var(--surface-light); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text-muted); border: 1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 50%; height: 50%;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div><span>${myUserName}</span>`;
+            document.getElementById('logged-in-user').innerHTML = `<div style="width:28px; height:28px; background:var(--surface-light); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text-muted); border: 1px solid var(--border); overflow: hidden;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 50%; height: 50%;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div><span>${myUserName}</span>`;
             document.getElementById('header-rang').innerText = 'RANG: ' + myUserRang; 
             document.getElementById('login-screen').style.display = 'none'; 
             document.getElementById('main-app').style.display = 'flex';
@@ -1152,7 +1155,18 @@
 
     async function megtekintProfil(id) {
         const a = ALL_TAGOK.find(x => x.id === id);
-        if (a) { document.getElementById('modal-ic').innerText = a.ic_nev || '-'; document.getElementById('modal-user').innerText = '@' + a.nev; document.getElementById('modal-rang').innerText = a.rang; document.getElementById('modal-discord').innerText = a.discord || '-'; }
+        let modalAvatar = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 50%; height: 50%;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
+        
+        if (a) { 
+            document.getElementById('modal-ic').innerText = a.ic_nev || '-'; 
+            document.getElementById('modal-user').innerText = '@' + a.nev; 
+            document.getElementById('modal-rang').innerText = a.rang; 
+            document.getElementById('modal-discord').innerText = a.discord || '-'; 
+            if (a.profilkep) {
+                modalAvatar = `<img src="${a.profilkep}" style="width:100%; height:100%; object-fit: cover; border-radius: 50%;">`;
+            }
+        }
+        document.querySelector('#profil-modal [style*="width:60px"]').innerHTML = modalAvatar;
         document.getElementById('modal-leiras').innerText = 'Betöltés...'; document.getElementById('modal-warns').innerHTML = ''; document.getElementById('profil-modal').style.display = 'flex';
         
         const r = await apiFetch(`/api/profil/${id}`); if (!r) return; const p = await r.json();
@@ -1163,10 +1177,20 @@
 
     async function fetchProfil() {
         const r = await apiFetch(`/api/profil/${myUserId}`); const p = await r.json();
+        
+        let avatarHtml = p.profilkep 
+            ? `<img src="${p.profilkep}" style="width:100%; height:100%; object-fit: cover; border-radius: 50%;">`
+            : `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 50%; height: 50%;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
+        
+        if (p.profilkep) {
+            const hDiv = document.querySelector('#logged-in-user div');
+            if (hDiv) hDiv.innerHTML = `<img src="${p.profilkep}" style="width:100%; height:100%; object-fit: cover; border-radius: 50%;">`;
+        }
+
         let h = `<div class="card" style="padding:0; overflow:hidden;">
             <div style="padding: 2.5rem 2rem; background: linear-gradient(to bottom, rgba(59, 130, 246, 0.1), transparent);">
                 <div style="display:flex; align-items:center; gap:20px;">
-                    <div style="width:80px; height:80px; border-radius:50%; background:var(--surface-light); display:flex; align-items:center; justify-content:center; color:var(--text-muted); border:1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 50%; height: 50%;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                    <div style="width:80px; height:80px; border-radius:50%; background:var(--surface-light); display:flex; align-items:center; justify-content:center; color:var(--text-muted); border:1px solid var(--border); overflow: hidden;">${avatarHtml}</div>
                     <div><h2 style="margin: 0 0 5px 0; font-size:1.8rem;">${p.ic_nev || '-'}</h2><p style="margin:0; color:var(--text-muted);">@${p.nev} <span class="role-badge" style="margin-left:10px;">${p.rang}</span></p></div>
                 </div>
             </div>
@@ -1187,7 +1211,9 @@
                     </div>
                 </div>
                 <div id="sajat-warns" style="margin-bottom:25px;"></div>
-                <h3 style="margin-top:0; font-size:1rem;">Bemutatkozás / Jegyzet</h3>
+                <h3 style="margin-top:0; font-size:1rem;">Profilkép Link (Csak Imgur)</h3>
+                <input type="text" id="input-profilkep" placeholder="https://i.imgur.com/abcdefg.png" value="${p.profilkep || ''}">
+                <h3 style="margin-top:15px; font-size:1rem;">Bemutatkozás / Jegyzet</h3>
                 <textarea id="input-bemutatkozas" rows="4" placeholder="Írj magadról...">${p.bemutatkozas || ''}</textarea>
                 <button class="btn btn-primary" onclick="mentesProfil()">Profil Mentése</button>
                 <hr style="border:none; border-top:1px solid var(--border); margin: 30px 0;">
@@ -1199,7 +1225,21 @@
         frissitAktivitasMeter(p);
     }
 
-    async function mentesProfil() { await apiFetch(`/api/profil/${myUserId}`, { method: 'PUT', body: JSON.stringify({ bemutatkozas: document.getElementById('input-bemutatkozas').value }) }); alert("Mentve!"); }
+    async function mentesProfil() { 
+        const pLink = document.getElementById('input-profilkep').value.trim();
+        if (pLink && !pLink.includes('imgur.com')) {
+            return alert("Hiba: Csak Imgur linket fogad el a rendszer!");
+        }
+        await apiFetch(`/api/profil/${myUserId}`, { 
+            method: 'PUT', 
+            body: JSON.stringify({ 
+                bemutatkozas: document.getElementById('input-bemutatkozas').value,
+                profilkep: pLink
+            }) 
+        }); 
+        alert("Mentve!"); 
+        fetchProfil();
+    }
     async function profilJelszocsere() {
         const uj = document.getElementById('profil-uj-jelszo').value; if (!uj || uj.length < 3) return alert("A jelszó túl rövid!");
         const r = await apiFetch('/api/jelszocsere', { method: 'POST', body: JSON.stringify({ userId: myUserId, ujJelszo: uj }) });
@@ -1262,7 +1302,7 @@
             if (a.szervezo_id === myUserId) g += `<span class="role-badge" style="background:rgba(255,255,255,0.1);">Szervező</span>`;
             else if (!b) g += `<button class="btn btn-primary" style="padding:0.4rem 1rem; font-size:0.8rem;" onclick="csatlakozikAkcio(${a.id}); event.stopPropagation();">Jelentkezés</button>`;
             else g += `<button class="btn" style="padding:0.4rem 1rem; font-size:0.8rem;" onclick="kilepAkcio(${a.id}); event.stopPropagation();">Kijelentkezés</button>`;
-            if (myPermissions.jog_akcio || myUserRang === 'DEV') { g += ` <button class="btn btn-danger" style="padding:0.4rem 1rem; font-size:0.8rem; margin-left:8px;" onclick="zarAkcio(${a.id}); event.stopPropagation();">Zárás</button>`; }
+            if (myPermissions.jog_akcio || myUserRang === 'DEV') { g += ` <button class="btn btn-danger" style="padding:0.4rem 1rem; font-size:0.8rem;" margin-left:8px;" onclick="zarAkcio(${a.id}); event.stopPropagation();">Zárás</button>`; }
         }
 
         const detailId = `details-${a.id}`;
@@ -1327,9 +1367,14 @@
         const tb = document.getElementById('tagok-lista'); if (!tb) return; tb.innerHTML = '';
         l.forEach(x => {
             if (x.rang === 'DEV') return;
+            
+            let tagAvatar = x.profilkep
+                ? `<img src="${x.profilkep}" style="width:100%; height:100%; object-fit: cover; border-radius: 50%;">`
+                : `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 50%; height: 50%;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
+
             let m = `<button class="btn" style="padding:0.4rem 1rem; font-size:0.8rem;" onclick="megtekintProfil(${x.id})">Profil</button>`;
             if (myPermissions.nev_valtoztat) { m += ` <button class="btn" style="padding:0.4rem 1rem; font-size:0.8rem;" onclick="nyitTagSzerkesztes(${x.id},'${x.nev}','${x.ic_nev}','${x.discord}','${x.rang}')">Szerkesztés</button> <button class="btn btn-danger" style="padding:0.4rem 1rem; font-size:0.8rem;" onclick="tagTorles(${x.id})">Törlés</button>`; }
-            tb.innerHTML += `<tr><td><div style="display:flex; align-items:center; gap:15px;"><div style="width:36px; height:36px; border-radius:50%; background:var(--surface-hover); display:flex; align-items:center; justify-content:center; color:var(--text-muted);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 50%; height: 50%;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div><div><div style="font-weight:600;">${x.ic_nev || '-'}${x.aktiv_warn_count > 0 ? `<div style="width:20px; height:20px; background:var(--warn); color:#000; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:bold; margin-left:8px;">${x.aktiv_warn_count}</div>` : ''}</div><div style="color:var(--text-muted); font-size:0.8rem;">@${x.nev}</div></div></div></td><td><span class="role-badge">${x.rang}</span></td><td>${m}</td></tr>`;
+            tb.innerHTML += `<tr><td><div style="display:flex; align-items:center; gap:15px;"><div style="width:36px; height:36px; border-radius:50%; background:var(--surface-hover); display:flex; align-items:center; justify-content:center; color:var(--text-muted); overflow: hidden;">${tagAvatar}</div><div><div style="font-weight:600;">${x.ic_nev || '-'}${x.aktiv_warn_count > 0 ? `<div style="width:20px; height:20px; background:var(--warn); color:#000; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:bold; margin-left:8px;">${x.aktiv_warn_count}</div>` : ''}</div><div style="color:var(--text-muted); font-size:0.8rem;">@${x.nev}</div></div></div></td><td><span class="role-badge">${x.rang}</span></td><td>${m}</td></tr>`;
         });
     }
 
@@ -1447,10 +1492,11 @@
 
     function udvozloUzenet(icNev) {
         let t = document.getElementById('welcome-toast'); if (!t) { t = document.createElement('div'); t.id = 'welcome-toast'; document.body.appendChild(t); }
-        t.innerHTML = `<h2 style="margin:0; font-size:1.8rem; color:var(--accent);">ÜDVÖZÖLLEK, ${icNev ? icNev.toUpperCase() : 'USER'}!</h2><p style="margin:0; color:var(--text-muted);">Sikeresen bejelentkeztél.</p>`;
+        t.innerHTML = `<h2 style="margin:0; font-size:1.8rem; color:var(--accent);">ÜDVÖZÖLLEK, ${icNev ? icNev.toUpperCase() : 'USER'}!</h2><p style="margin:0; color:var(--text-muted); ">Sikeresen bejelentkeztél.</p>`;
         setTimeout(() => { t.classList.add('show'); }, 200); setTimeout(() => { t.classList.remove('show'); }, 4000);
     }
     
+    // Auto-frissítés
     setInterval(async () => {
         if (!myUserId) return;
         
